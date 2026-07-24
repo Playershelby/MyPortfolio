@@ -1,0 +1,787 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitcount+Ink:wght@100..900&family=Bitcount+Prop+Single+Ink:wght@100..900&family=Press+Start+2P&display=swap');
+
+:root {
+    --font-family: "Bitcount Prop Single Ink", system-ui;
+    --font-family-star2p: "Press Start 2P", system-ui;
+    --font-family-code: "Google Sans Code", monospace;
+    --font-optical-sizing: auto;
+    --font-weight: <weight>;
+    --font-style: normal;
+    --color: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+    --shadow-color-medium: rgba(0, 0, 0, 0.3);
+    --shadow-color-inter: rgba(0, 0, 10, 0.3) 
+    --blue-bg-gradient: linear-gradient(45deg, #0056b3, #007bff);
+    --bg-color-blue: #0057b3e0;
+    --bg-color-blue-light: #007bffe0;
+}
+
+* {
+    padding: 0px;
+    margin: 0 auto;
+}
+
+body {
+    width: 100vw;
+    height: 100%;
+    background-color: #000;
+    /* Fundo preto sólido (espaço) */
+    height: 100vh;
+    position: relative;
+    /* Para posicionar as estrelas absolutamente */
+    z-index: 0;
+}
+
+/* Container para as estrelas (fundo animado) */
+.star-container {
+    position: fixed;
+    /* Fixo para cobrir toda a tela */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    /* Não interfere em cliques no conteúdo */
+    z-index: 1;
+    /* Atrás do conteúdo principal */
+}
+
+/* Estilo base para estrelas piscando */
+.star {
+    position: absolute;
+    top: 0;
+    /* Posição Y será definida via JS ou inline */
+    left: 0;
+    /* Posição X será definida via JS ou inline */
+    width: 2px;
+    /* Tamanho base (variável via JS) */
+    height: 2px;
+    background-color: #fff;
+    /* Branco base; cor variada via JS */
+    border-radius: 50%;
+    /* Forma circular */
+    opacity: 0.3;
+    /* Inicial baixo para piscar */
+    animation: twinkle linear infinite;
+    /* Animação de piscar */
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+    /* Glow sutil para brilho estelar */
+}
+
+/* Animação de piscar (twinkle) para estrelas */
+@keyframes twinkle {
+
+    0%,
+    100% {
+        opacity: 0.3;
+        /* Baixo brilho */
+        transform: scale(1);
+        /* Tamanho normal */
+    }
+
+    50% {
+        opacity: 1;
+        /* Pico de brilho */
+        transform: scale(1.2);
+        /* Leve aumento para "piscar" */
+    }
+}
+
+/* Estilo para estrelas cadentes (shooting stars) */
+.shooting-star {
+    position: absolute;
+    top: -20px;
+    /* Começa fora da tela superior */
+    left: -20px;
+    /* Começa fora da tela esquerda */
+    width: 2px;
+    height: 2px;
+    background-color: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: shoot linear forwards;
+    /* Animação de cruzamento (não infinite) */
+    box-shadow: 0 0 6px rgba(255, 255, 255, 1);
+    /* Glow forte */
+    z-index: 2;
+    /* Acima das estrelas piscando */
+}
+
+/* Cauda da estrela cadente (pseudo-elemento) */
+.shooting-star::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    /* Comprimento da cauda */
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, #fff 50%, transparent 100%);
+    /* Cauda fade */
+    transform: rotate(-45deg);
+    /* Diagonal para movimento */
+    opacity: 0.8;
+}
+
+/* Animação de cruzamento diagonal para estrelas cadentes */
+@keyframes shoot {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+        /* Aparece */
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(100vw + 20px, 100vh + 20px) rotate(-45deg);
+        /* Sai pela tela inferior-direita */
+        opacity: 0;
+        /* Fade out */
+    }
+}
+
+.container_nav {
+    width: 100vw;
+    max-height: 50px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    gap: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(155, 155, 155, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 999;
+}
+
+.container_nav nav {
+    padding: 0;
+    height: 100%;
+    max-height: 50px;
+    display: flex;
+    gap: 10px;
+}
+
+.container_nav nav li {
+    text-decoration: none;
+    list-style: none;
+    text-align: center;
+    align-content: center;
+}
+
+#l1 {
+    max-width: 400px;
+    width: 100%;
+    background-color: var(--bg-color-blue);
+    box-shadow: 0 5px 10px var(--shadow-color);
+    transform: skewX(-20deg);
+    transition: 1s;
+}
+
+#l1:hover {
+    background-color: var(--bg-color-blue-light);
+    cursor: pointer;
+}
+
+#l2 {
+    max-width: 400px;
+    width: 100%;
+    background-color: var(--bg-color-blue);
+    box-shadow: 0 5px 10px var(--shadow-color);
+    transform: skewX(-20deg);
+    transition: 1s;
+}
+
+#l2:hover {
+    background-color: var(--bg-color-blue-light);
+    cursor: pointer;
+}
+
+#l3 {
+    max-width: 400px;
+    width: 100%;
+    background-color: var(--bg-color-blue);
+    box-shadow: 0 5px 10px var(--shadow-color);
+    transform: skewX(-20deg);
+    transition: 1s;
+}
+
+#l3:hover {
+    background-color: var(--bg-color-blue-light);
+    cursor: pointer;
+}
+
+.container_nav nav li a {
+    padding: 5px;
+    color: var(--color);
+    font-family: var(--font-family-star2p);
+    font-size: 14pt;
+    text-decoration: none;
+}
+
+main {
+    background-color: rgba(0, 0, 20, 0.1);
+    backdrop-filter: blur(15px);
+    scroll-behavior: smooth;
+}
+
+
+.sound {
+    display: flex;
+    background:  rgba(155, 155, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 10px;
+    margin-top: 5%;
+    max-width: 1200px;
+    width: 100%;
+    max-height: 150px;
+    height: 100%;
+    text-align: center;
+    align-content: center;
+    z-index: 3;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.sound audio {
+    display: none;
+}
+
+#playBtn {
+    background: linear-gradient(45deg, #007bff, #0056b3);
+    color: var(--color);
+    border: 1px solid rgb(0, 0, 0);
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16pt;
+    font-family: var(--font-family-star2p);
+    margin-bottom: 15px;
+    transform: skewX(-15deg);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+}
+
+#playBtn:hover {
+    transform: scale(1.05) skewX(-5deg);
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.5);
+    backdrop-filter: blur(15px);
+}
+
+#playBtn.playing {
+    background: linear-gradient(45deg, #0056b3, #007bff);
+    border: 1px solid rgb(0, 0, 0);
+}
+
+/* Slider de volume */
+.volume-control {
+    margin-bottom: 10px;
+}
+
+.volume-control label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: right;
+    font-size: 14pt;
+    font-family: var(--font-family);
+}
+
+#volumeSlider {
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    outline: none;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+#volumeSlider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.progress-control {
+    margin-bottom: 10px;
+}
+
+#progressSlider {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    outline: none;
+}
+
+#progressSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Tempo atual/duração */
+.time-display {
+    font-size: 14pt;
+    font-family: var(--font-family);
+    text-align: right;
+}
+
+.I_am {
+    background: rgba(10, 10, 10, 0.1);
+    backdrop-filter: blur(15px);
+    height: 100vh;
+    z-index: 2;
+}
+
+.container_re_sociais {
+    background-color:  rgba(155, 155, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 2% auto;
+    max-height: 60px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    flex-grow: var(--font-style);
+    gap: 50px;
+    width: 100vw;
+    z-index: 2;
+}
+
+.redes-sociais:hover {
+    transform: skewX(-15deg);
+    transition: all 1s;
+}
+
+.redes-sociais a {
+    padding: 15px;
+    max-width: 60px;
+    max-height: 60px;
+    height: 100%;
+    width: 100%;
+    margin: 0 15px;
+    border-radius: 2rem;
+    background: rgba(250, 250, 250, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px var(--shadow-color-medium);
+}
+
+.redes-sociais a:hover {
+    background: rgba(10, 0, 100, 0.7);
+    border-radius: 0rem;
+    transition: 1s;
+}
+
+.redes-sociais a i {
+    background: transparent;
+    color: var(--color);
+    align-items: center;
+    text-decoration: none;
+    font-size: 16pt;
+    transition: all 1s;
+}
+
+.redes-sociais a i:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+hr {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 1%;
+    border: none;
+    background: radial-gradient(circle at 20% 20%,
+            /* Posição do centro do brilho (canto superior esquerdo) */
+            rgba(255, 255, 255, 0.5) 0%,
+            /* Centro brilhante (branco semi-transparente) */
+            rgba(255, 255, 255, 0.4) 45%,
+            /* Transição para menos intenso */
+            transparent 70%
+            /* Fade para transparente nas bordas */
+        );
+    backdrop-filter: blur(15px);
+    box-shadow:
+        0 6px 12px rgba(0, 0, 0, 0.1),
+        /* Sombra base */
+        0 0 20px rgba(255, 255, 255, 0.6),
+        /* Glow branco difuso (efeito de luz externa) */
+        inset 0 0 20px rgba(255, 255, 255, 0.3);
+    /* Glow interno para relevo luminoso */
+    filter: brightness(1.1);
+    transform: skewX(-15deg);
+    transform: skewY(-15deg);
+    z-index: -1;
+}
+
+.contener_my {
+    display: flex;
+    max-width: 1920px;
+    height: 450px;
+    margin: 0 auto;
+    padding: 40px;
+    background: rgba(155, 155, 255, 0.1);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    align-content: center;
+    align-content: center;
+    animation: glow 2s infinite linear;
+    z-index: 3;
+}
+
+.box {
+    max-width: 1200;
+    height: 450px;
+    width: 100%;
+}
+
+#foto {
+    background-color: rgb(0, 0, 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: fit-content;
+    height: 100%;
+    overflow: hidden;
+    border-right: 1px solid rgba(100, 100, 100, 0.7);
+    border-radius: 70px 0 0 70px;
+    box-shadow: 0 0 15px 10px var(--shadow-color-medium);
+    backdrop-filter: blur(15px);
+    z-index: 3;
+}
+
+.box_name {
+    background: rgba(50, 50, 50, 0.3);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px groove rgba(50, 50, 50, 0.3);
+    box-shadow: inset 0 0 8px 8px var(--shadow-color-medium);
+    border-radius: 2rem;
+    max-width: 550px;
+    height: 450px;
+    position: absolute;
+    top: 5%;
+    left: 55%;
+    z-index: 3;
+}
+
+.my_name {
+    padding: 15px;
+    margin: 25px auto;
+    color: var(--color);
+    width: fit-content;
+    text-align: center;
+}
+
+.my_name h1 {
+    padding: 5px;
+    font-family: var(--font-family);
+    font-size: 28pt;
+    text-shadow: 0 0 8px var(--shadow-color);
+}
+
+.my_name h3 {
+    padding: 5px;
+    border-radius: 1rem;
+    font-family: var(--font-family-code);
+    font-size: 18pt;
+    text-shadow: 0 0 8px var(--shadow-color);
+}
+
+.my_name p {
+    padding: 5px;
+    font-family: var(--font-family-code);
+    font-size: 16pt;
+    font-style: italic;
+    text-shadow: 0 0 10px var(--shadow-color);
+}
+
+@keyframes glow {
+    0% {
+        box-shadow: 8px 0 8px 0 rgba(10, 0, 90, 0.5);
+        border-left: 1px solid #007bff;
+    }
+    25% {
+        box-shadow: 0 0 8px 8px rgba(10, 10, 130, 0.5);
+        border-top: 1px solid #007bff;
+    }
+    50% {
+        box-shadow: 0 8px 8px 0 rgba(10, 0, 90, 0.5);
+        border-right: 1px solid #007bff;
+    }
+    75% {
+        box-shadow: 0 0 8px 0 rgba(10, 10, 130, 0.5);
+        border-bottom: 1px solid #007bff;
+    }
+}
+
+#MyProject1 {
+    margin-left: 1%;
+    margin-top: 0;
+}
+
+#MyProject2 {
+    margin-left: 5%;
+}
+
+/* Skew direto no vídeo (opcional; pode conflitar com wrapper – remova se usar clip-path) */
+#MyProject1 video {
+    transform: skewX(0deg);
+    max-width: 1920px;
+    max-height: 1080px;
+}
+
+#MyProject2 video {
+    transform: skewX(0deg);
+    max-width: 1920px;
+    max-height: 1080px;
+}
+
+/* Seção principal com vídeo de fundo */
+.video-section {
+    padding: 5px;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin-top: 10px;
+    overflow: hidden;
+    display: flex;
+    align-content: center;
+    background-color: rgba(10, 10, 10, 0.1);
+    backdrop-filter: blur(15px);
+    z-index: 3;
+}
+
+/* Wrapper para máscara skew esquerda (#MyProject1) – mescladas declarações */
+.video-wrapper1 {
+    position: relative;
+    width: 200%;
+    height: 100%;
+    overflow: hidden;
+    transform: skewX(-15deg);
+    transition: transform 0.5s ease, clip-path 0.5s ease;
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); /* Máscara inclinado esquerda */
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+}
+
+/* Hover: Reduz o skew para interatividade */
+.video-wrapper1:hover {
+    transform: skewX(-15deg) scale(1.05);
+    clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%); /* Expande máscara no hover */
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, 85% 100%, 0% 100%);
+}
+
+/* Wrapper para máscara skew direita (#MyProject2) */
+#MyProject2 .video-wrapper2 {
+    position: relative;
+    width: 200%;
+    height: 100%;
+    overflow: hidden;
+    transform: skewX(15deg);
+    transition: transform 0.5s ease, clip-path 0.5s ease;
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 50px 100%); /* Máscara inclinado direita */
+    -webkit-clip-path: polygon(0% 0%, 100% 0%, 75% 100%, 50px 100%);
+}
+
+#MyProject2 .video-wrapper2:hover {
+    transform: skewX(15deg) scale(1.05);
+    clip-path: polygon(0 0, 100% 0, 0% 100%, 20px 100%); /* Reduz shift no hover para direita */
+    -webkit-clip-path: polygon(0 0, 100% 0, 80% 100%, 20px 100%);
+}
+
+/* Vídeo de fundo (comum a ambos) */
+.video-section video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+}
+
+/* Overlay escuro para melhorar legibilidade (opcional) */
+.video-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 20, 20, 0.4);
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Container com efeito glass */
+#glass1 {
+    margin-right: 10%;
+}
+
+.glass-container {
+    position: relative;
+    z-index: 3;
+    max-width: 600px;
+    max-height: 600px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    align-content: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Título */
+.glass-container h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtítulo */
+.glass-container h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 300;
+}
+
+/* Container com efeito glass */
+.glass-container {
+    position: relative;
+    max-width: 650px;
+    max-height: 750px;
+    padding: 40px;
+    background: rgba(155, 155, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(155, 155, 155, 0.5);
+    border-radius: 2rem;
+    box-shadow: var(--shadow-color-medium);
+    text-align: center;
+    z-index: 3;
+    animation: fadeInUp 1s ease-out;
+}
+
+/* Título */
+.glass-container h1 {
+    font-size: 30pt;
+    font-family: var(--font-family-star2p);
+    margin-bottom: 5%;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Subtítulo */
+.glass-container h2 {
+    font-size: 16pt;
+    font-family: fantasy;
+    margin-bottom: 20px;
+    color: var(--color);
+    font-weight: 300;
+}
+
+/* Parágrafo */
+.glass-container p {
+    font-size: 1.2em;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    line-height: 1.6;
+    margin-bottom: 10%;
+    color: var(--color);
+}
+
+/* Botão com hover effect */
+.glass-container button {
+    max-width: 250px;
+    background: rgba(100, 100, 150, 0.3);
+    border: 1px solid rgba(155, 155, 155, 0.5);
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.glass-container button a {
+    text-decoration: none;
+    color: var(--color);
+}
+
+.glass-container button:hover {
+    background: rgba(150, 150, 150, 0.4);
+    animation: glow 2s infinite linear;
+}
+
+/* Animação de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+footer {
+    background: rgb(10, 10, 10);
+    margin-top: 35px;
+    border: 1px groove rgba(255, 255, 255, 0.4);
+    border-radius: 1rem;
+    width: 100vw;
+    max-height: 50px;
+    height: 100%;
+    align-content: center;
+}
+
+footer p {
+    font-size: 12pt;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--color);
+    text-shadow: 0 5px 8px var(--shadow-color);
+    text-align: center;
+}
